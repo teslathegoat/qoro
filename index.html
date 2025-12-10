@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qoro - Building the Future of Distributed Quantum Computing</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-dark: #0a0a0f;
+            --secondary-dark: #1a1a2e;
+            --deep-blue: #16213e;
+            --accent-blue: #0f3460;
+            --silver: #c0c0c0;
+            --white: #ffffff;
+            --dark-green: #1e3a2e;
+            --accent-green: #4a7c59;
+            --gradient-primary: linear-gradient(135deg, #0a0a0f 0%, #16213e 50%, #0f3460 100%);
+            --gradient-secondary: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: var(--primary-dark);
+            color: var(--white);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 10, 15, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, var(--silver), var(--white));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--silver);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: var(--white);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--gradient-primary);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%230f3460" fill-opacity="0.1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,154.7C960,171,1056,181,1152,165.3C1248,149,1344,107,1392,85.3L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') no-repeat bottom;
+            background-size: cover;
+            opacity: 0.5;
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 1;
+            max-width: 800px;
+            padding: 2rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 1.5rem;
+            background: linear-gradient(45deg, var(--white), var(--silver));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--silver);
+            margin-bottom: 2rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: var(--gradient-secondary);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            border-color: var(--silver);
+            box-shadow: 0 10px 30px rgba(192, 192, 192, 0.2);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 5rem 0;
+            background: var(--secondary-dark);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--white);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: var(--deep-blue);
+            padding: 2rem;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(192, 192, 192, 0.1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--silver);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--silver);
+        }
+
+        .feature-card h3 {
+            color: var(--white);
+            margin-bottom: 1rem;
+        }
+
+        .feature-card p {
+            color: var(--silver);
+        }
+
+        /* Technology Section */
+        .technology {
+            padding: 5rem 0;
+            background: var(--primary-dark);
+        }
+
+        .tech-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .tech-info h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--white);
+        }
+
+        .tech-info p {
+            color: var(--silver);
+            margin-bottom: 2rem;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .tech-item {
+            background: var(--dark-green);
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            color: var(--white);
+        }
+
+        .tech-visual {
+            position: relative;
+            height: 400px;
+            background: var(--gradient-secondary);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        /* Case Studies */
+        .case-studies {
+            padding: 5rem 0;
+            background: var(--secondary-dark);
+        }
+
+        .case-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .case-card {
+            background: var(--deep-blue);
+            padding: 2rem;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .case-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .case-card h3 {
+            color: var(--white);
+            margin-bottom: 1rem;
+        }
+
+        .case-card p {
+            color: var(--silver);
+            margin-bottom: 1rem;
+        }
+
+        .read-more {
+            color: var(--accent-green);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .read-more:hover {
+            color: var(--white);
+        }
+
+        /* About Section */
+        .about {
+            padding: 5rem 0;
+            background: var(--primary-dark);
+        }
+
+        .about-content {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .about-content p {
+            color: var(--silver);
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .team-member {
+            text-align: center;
+        }
+
+        .team-member img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: var(--gradient-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .team-member h4 {
+            color: var(--white);
+            margin-bottom: 0.5rem;
+        }
+
+        .team-member p {
+            color: var(--silver);
+            font-size: 0.9rem;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 5rem 0;
+            background: var(--secondary-dark);
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            color: var(--white);
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            background: var(--deep-blue);
+            border: 1px solid rgba(192, 192, 192, 0.2);
+            border-radius: 8px;
+            color: var(--white);
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--silver);
+        }
+
+        .submit-button {
+            width: 100%;
+            padding: 1rem;
+            background: var(--gradient-secondary);
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Blog Section */
+        .blog {
+            padding: 5rem 0;
+            background: var(--primary-dark);
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .blog-card {
+            background: var(--deep-blue);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .blog-image {
+            height: 200px;
+            background: var(--gradient-secondary);
+        }
+
+        .blog-content {
+            padding: 1.5rem;
+        }
+
+        .blog-content h3 {
+            color: var(--white);
+            margin-bottom: 1rem;
+        }
+
+        .blog-content p {
+            color: var(--silver);
+            margin-bottom: 1rem;
+        }
+
+        .blog-meta {
+            color: var(--accent-green);
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary-dark);
+            padding: 3rem 0;
+            text-align: center;
+            border-top: 1px solid rgba(192, 192, 192, 0.1);
+        }
+
+        .footer-content {
+            color: var(--silver);
+        }
+
+        .social-links {
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            color: var(--silver);
+            font-size: 1.5rem;
+            margin: 0 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--white);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .tech-content {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">Qoro</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#technology">Technology</a></li>
+                <li><a href="#case-studies">Case Studies</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#blog">Blog</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Building the Future of Distributed Quantum Computing</h1>
+            <p>Qoro develops the essential network stack for quantum networks.</p>
+            <a href="#contact" class="cta-button">Get in Touch</a>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2 class="section-title fade-in">Our Core Technologies</h2>
+            <div class="features-grid">
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">⚛️</div>
+                    <h3>Quantum Networking</h3>
+                    <p>Advanced quantum entanglement distribution protocols enabling seamless communication between quantum nodes across vast distances.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">🌐</div>
+                    <h3>Scalable Infrastructure</h3>
+                    <p>Modular architecture designed to scale from small quantum clusters to global quantum networks with millions of qubits.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">💻</div>
+                    <h3>Distributed Computing</h3>
+                    <p>Revolutionary frameworks for distributed quantum computing, enabling unprecedented computational power across multiple quantum processors.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Security in Quantum Systems</h3>
+                    <p>Quantum-resistant security protocols ensuring unbreakable encryption and secure communication in the quantum era.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technology Section -->
+    <section id="technology" class="technology">
+        <div class="container">
+            <h2 class="section-title fade-in">Our Technology Stack</h2>
+            <div class="tech-content">
+                <div class="tech-info fade-in">
+                    <h3>Quantum Network Operating System</h3>
+                    <p>At the heart of Qoro's innovation lies our proprietary Quantum Network Operating System (QNOS) - a groundbreaking platform that orchestrates quantum resources across distributed networks with unprecedented efficiency and reliability.</p>
+                    <p>Our technology leverages advanced quantum error correction, entanglement swapping protocols, and real-time quantum state tomography to ensure optimal performance in even the most challenging network conditions.</p>
+                    <div class="tech-stack">
+                        <span class="tech-item">Quantum TCP/IP</span>
+                        <span class="tech-item">Entanglement Routing</span>
+                        <span class="tech-item">Quantum Error Correction</span>
+                        <span class="tech-item">Distributed Quantum Gates</span>
+                        <span class="tech-item">Quantum Memory Management</span>
+                    </div>
+                </div>
+                <div class="tech-visual fade-in">
+                    <div style="text-align: center;">
+                        <div style="font-size: 4rem; margin-bottom: 1rem;">🚀</div>
+                        <p>Quantum Network Visualization</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Case Studies Section -->
+    <section id="case-studies" class="case-studies">
+        <div class="container">
+            <h2 class="section-title fade-in">Research & Publications</h2>
+            <div class="case-grid">
+                <div class="case-card fade-in">
+                    <h3>Quantum Internet Demonstration</h3>
+                    <p>Successful implementation of a 1000km quantum network connecting major research institutions, achieving 99.9% entanglement fidelity.</p>
+                    <a href="#" class="read-more">Read Full Paper →</a>
+                </div>
+                <div class="case-card fade-in">
+                    <h3>Distributed Quantum Computing at Scale</h3>
+                    <p>Breakthrough in distributed quantum algorithm execution across 50 quantum processors, solving optimization problems 10,000x faster than classical methods.</p>
+                    <a href="#" class="read-more">Read Full Paper →</a>
+                </div>
+                <div class="case-card fade-in">
+                    <h3>Quantum Network Security Protocol</h3>
+                    <p>Development of unbreakable quantum encryption protocols resistant to both classical and quantum attacks, ensuring future-proof communications.</p>
+                    <a href="#" class="read-more">Read Full Paper →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2 class="section-title fade-in">About Qoro</h2>
+            <div class="about-content fade-in">
+                <p>Founded in 2021, Qoro is at the forefront of quantum networking technology. Our mission is to accelerate the advent of practical quantum computing by building the essential infrastructure that connects quantum devices worldwide.</p>
+                <p>We envision a future where quantum networks enable unprecedented computational power, secure communications, and scientific discoveries that will transform humanity's understanding of the universe.</p>
+                <p>Our team comprises world-leading experts in quantum physics, network engineering, and distributed systems, united by a shared passion for pushing the boundaries of what's possible.</p>
+            </div>
+            <div class="team-grid">
+                <div class="team-member fade-in">
+                    <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 150 150'><circle cx='75' cy='75' r='75' fill='%231a1a2e'/><text x='75' y='85' text-anchor='middle' fill='%23c0c0c0' font-size='60'>👤</text></svg>" alt="Team Member">
+                    <h4>Dr. Elon Musk</h4>
+                    <p>CEO & Co-Founder</p>
+                </div>
+                <div class="team-member fade-in">
+                    <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 150 150'><circle cx='75' cy='75' r='75' fill='%231a1a2e'/><text x='75' y='85' text-anchor='middle' fill='%23c0c0c0' font-size='60'>👤</text></svg>" alt="Team Member">
+                    <h4>Prof. Sam Altman</h4>
+                    <p>CTO & Co-Founder</p>
+                </div>
+                <div class="team-member fade-in">
+                    <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 150 150'><circle cx='75' cy='75' r='75' fill='%231a1a2e'/><text x='75' y='85' text-anchor='middle' fill='%23c0c0c0' font-size='60'>👤</text></svg>" alt="Team Member">
+                    <h4>Dr. Jensen Huang</h4>
+                    <p>Head of Research</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="blog" class="blog">
+        <div class="container">
+            <h2 class="section-title fade-in">Latest Insights</h2>
+            <div class="blog-grid">
+                <div class="blog-card fade-in">
+                    <div class="blog-image"></div>
+                    <div class="blog-content">
+                        <h3>The Future of Quantum Networks</h3>
+                        <p>Exploring the next decade of quantum networking and its potential to revolutionize computing...</p>
+                        <div class="blog-meta">December 1, 2025 • 5 min read</div>
+                    </div>
+                </div>
+                <div class="blog-card fade-in">
+                    <div class="blog-image"></div>
+                    <div class="blog-content">
+                        <h3>Quantum Error Correction Breakthrough</h3>
+                        <p>Our latest research achieves 99.9% fidelity in long-distance quantum communication...</p>
+                        <div class="blog-meta">November 15, 2025 • 8 min read</div>
+                    </div>
+                </div>
+                <div class="blog-card fade-in">
+                    <div class="blog-image"></div>
+                    <div class="blog-content">
+                        <h3>Building Scalable Quantum Infrastructure</h3>
+                        <p>Key considerations for designing quantum networks that can scale to global proportions...</p>
+                        <div class="blog-meta">November 1, 2025 • 6 min read</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title fade-in">Get in Touch</h2>
+            <form class="contact-form fade-in">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="company">Company</label>
+                    <input type="text" id="company" name="company">
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" rows="5" required></textarea>
+                </div>
+                <button type="submit" class="submit-button">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2025 Qoro. All rights reserved.</p>
+                <div class="social-links">
+                    <a href="#">📧</a>
+                    <a href="#">🐦</a>
+                    <a href="#">💼</a>
+                    <a href="#">📄</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Fade in animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Navigation background on scroll
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 100) {
+                nav.style.background = 'rgba(10, 10, 15, 0.98)';
+            } else {
+                nav.style.background = 'rgba(10, 10, 15, 0.95)';
+            }
+        });
+
+        // Form submission
+        document.querySelector('.contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your message! We will get back to you soon.');
+            this.reset();
+        });
+    </script>
+</body>
+</html>
